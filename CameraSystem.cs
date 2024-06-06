@@ -472,13 +472,8 @@ public class CameraSystem
 		return result;
 	}
 	
-	//Display a spline between 2 points derived with the Catmull-Rom spline algorithm
 	public static Point[] SampleSpline(Point[] pointsList, SplineType type, int pointsPerSpline = 100)
 	{
-		// if (type == SplineType.PiecewiseHermite)
-		// {
-		// 	return PiecewiseHermiteInterpolation(pointsList, pointsPerSpline);
-		// }
 		List<Point> resultPoints = new List<Point>();
 		for (int pos = 1; pos < pointsList.Length - 2; pos++)
 		{
@@ -540,7 +535,6 @@ public class CameraSystem
 				break;
 		}
 
-		// rot = Squad.SplineSegment(p0.rotation, p1.rotation, p2.rotation, p3.rotation, t);
 		return new Point(pos, rot);
 	}
 
@@ -587,65 +581,6 @@ public class CameraSystem
 		//The cubic polynomial: a + b * t + c * t^2 + d * t^3
 		return 0.5f * (a + (b * t) + (c * t * t) + (d * t * t * t));
 	}
-
-	// public static Point[] PiecewiseHermiteInterpolation(Point[] points, int samplesPerPoint)
-	// {
-	// 	Vector3[] positions = points.Select(x => x.position).ToArray();
-	//
-	// 	Vector3[] eulers = new Vector3[points.Length];
-	//
-	// 	eulers[0] = FromQ2(points[0].rotation);
-	// 	for (var i = 1; i < points.Length; i++)
-	// 	{
-	// 		eulers[i] = CorrectAngles(eulers[i-1], FromQ2(points[i].rotation));
-	// 	}
-	//
-	// 	string positionString = positions.Select(x => $"{x.X}${x.Y}${x.Z}").Aggregate((x, y) => x + "|" + y).Replace(",", ".");
-	// 	string eulerString = eulers.Select(x => $"{x.X}${x.Y}${x.Z}").Aggregate((x, y) => x + "|" + y).Replace(",", ".");
-	//
-	// 	
-	// 	ProcessStartInfo start = new ProcessStartInfo();
-	// 	start.FileName = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Blender\\3.6\\python\\bin\\python.exe";
-	// 	start.Arguments = $"C:\\Users\\jelle\\Desktop\\School\\Projects\\GeKut\\CameraSystem\\PythonShit\\main.py {positionString} {eulerString} {samplesPerPoint}";
-	// 	start.UseShellExecute = false;
-	// 	start.RedirectStandardOutput = true;
-	// 	string result = "";
-	// 	using(Process process = Process.Start(start))
-	// 	{
-	// 		using(StreamReader reader = process.StandardOutput)
-	// 		{
-	// 			result = reader.ReadToEnd().Replace(".", ",");
-	// 		}
-	// 	}
-	//
-	// 	string[] outputs = result.Split("^");
-	// 	Vector3[] newPositions = outputs[0].Split("|").Select(x =>
-	// 			new Vector3(float.Parse(x.Split("$")[0]), float.Parse(x.Split("$")[1]), float.Parse(x.Split("$")[2])))
-	// 		.ToArray();
-	// 	Vector3[] newEulers = outputs[1].Split("|").Select(x =>
-	// 			new Vector3(float.Parse(x.Split("$")[0]), float.Parse(x.Split("$")[1]), float.Parse(x.Split("$")[2])))
-	// 		.ToArray();
-	// 	return newPositions.Zip(newEulers).Select(x => new Point(x.First, ToQ(x.Second))).ToArray();
-	// }
-	
-	/*
-	 * import sys
-
-from scipy.interpolate import pchip_interpolate
-
-if __name__ == '__main__':
-	positions = list(map(lambda x: list(map(lambda y: float(y), x.split("$"))), sys.argv[1].split("|")))
-	eulers = list(map(lambda x: list(map(lambda y: float(y), x.split("$"))), sys.argv[2].split("|")))
-	amount = float(sys.argv[3])
-	# print(f"{len(positions), len(positions[0]), amount}")
-	x = range(-1, len(positions) - 1)
-	inputs = [1/amount * x for x in range(int((len(positions)-2) * amount))]
-	output_pos = pchip_interpolate(x, positions, inputs)
-	output_rot = pchip_interpolate(x, eulers, inputs)
-	pos_string = "|".join(map(lambda x: "$".join([str(i) for i in x]), output_pos))
-	rot_string = "|".join(map(lambda x: "$".join([str(i) for i in x]), output_rot))
-	print(pos_string + "^" + rot_string)
-	 */
 	
 	static List<Point> ResampleCurve(Point[] originalPoints, int desiredPointCount)
 	{
@@ -778,6 +713,4 @@ if __name__ == '__main__':
 		return result;
 	}
 
-	public static string testShouldStay = "a";
-	public static string testShouldStay2 = "a";
 }
