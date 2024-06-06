@@ -17,25 +17,26 @@ public class CameraSystem
 	public const string xPosReceiveParamPath			 = "CameraSystem/Send/PositionX";		// Float | x position [0, 1]
 	public const string yPosReceiveParamPath			 = "CameraSystem/Send/PositionY";		// Float | y rotation [0, 1]
 	public const string zPosReceiveParamPath			 = "CameraSystem/Send/PositionZ";		// Float | z rotation [0, 1]
-	public const string pointIndexParamPath			     = "CameraSystem/PointIndex";			// Int	 | current point to edit
-	public const string setPointParamPath			     = "CameraSystem/SetPoint";				// Bool  | set current selected point to current position/rotation location
-	public const string totalTimeParamPath			     = "CameraSystem/TotalTimeLength";		// Float | time we want the full track to take (0 = 0 sec, 1 = 10 sec)
+	public const string pointIndexParamPath				 = "CameraSystem/PointIndex";			// Int	 | current point to edit
+	public const string setPointParamPath				 = "CameraSystem/SetPoint";				// Bool  | set current selected point to current position/rotation location
+	public const string totalTimeParamPath				 = "CameraSystem/TotalTimeLength";		// Float | time we want the full track to take (0 = 0 sec, 1 = 10 sec)
 	public const string resetAllPointsParamPath			 = "CameraSystem/ResetAllPoints";		// Bool  | resets every point
-	public const string playTrackParamPath		     	 = "CameraSystem/PlayTrack";			// Bool  | starts playing the current track 
-	public const string isPlayingParamPath               = "CameraSystem/IsPlaying";			// Bool  | we set this when playing
-	public const string isTimePerPointParamPath          = "CameraSystem/IsTimePerPoint";  		// Bool  | Whether or not we use total time or time per pointt
-	public const string waitTimeParamPath                = "CameraSystem/WaitTime";  			// Float | how long to wait after done (0 = 0 sec, 1 = 10 sec)
-	public const string useBSplineParamPath              = "CameraSystem/UseBSpline";			// Bool  | whether or not to use a b spline
-	public const string loopPath                         = "CameraSystem/Loop";					// Bool  | whether or not we loop the system
-	public const string circleModePath                   = "CameraSystem/CircleMode";			// Bool  | whether we should rotate around a point or follow a path
-	public const string errorCodeParamPath               = "CameraSystem/ErrorCode";			// Int   | we set this when we error
-	public const string connectedPath                    = "CameraSystem/Connected";			// Bool  | we set this to true to show we are connected
-	public const string xPosSendParamPath                = "CameraSystem/Receive/XPosition";	// Float | Current x location of the camera [0, 1]
-	public const string yPosSendParamPath                = "CameraSystem/Receive/YPosition";	// Float | Current y location of the camera [0, 1]
-	public const string zPosSendParamPath                = "CameraSystem/Receive/ZPosition";	// Float | Current z location of the camera [0, 1] 
-	public const string xRotSendParamPath                = "CameraSystem/Receive/XRotation";	// Float | Current x euler rotation of the camera [0, 1]
-	public const string yRotSendParamPath                = "CameraSystem/Receive/YRotation";	// Float | Current y euler rotation of the camera [0, 1]
-	public const string zRotSendParamPath                = "CameraSystem/Receive/ZRotation";	// Float | Current z euler rotation of the camera [0, 1]
+	public const string playTrackParamPath			 	 = "CameraSystem/PlayTrack";			// Bool  | starts playing the current track 
+	public const string isPlayingParamPath				 = "CameraSystem/IsPlaying";			// Bool  | we set this when playing
+	public const string isTimePerPointParamPath			 = "CameraSystem/IsTimePerPoint";  		// Bool  | Whether or not we use total time or time per point
+	public const string waitTimeParamPath				 = "CameraSystem/WaitTime";  			// Float | how long to wait after done (0 = 0 sec, 1 = 10 sec)
+	public const string useBSplineParamPath				 = "CameraSystem/UseBSpline";			// Bool  | whether or not to use a b spline
+	public const string loopPath						 = "CameraSystem/Loop";					// Bool  | whether or not we loop the system
+	public const string closedLoopPath					 = "CameraSystem/ClosedLoop";			// Bool  | whether we should close the loop, seamlessly looping back to the first point
+	public const string circleModePath					 = "CameraSystem/CircleMode";			// Bool  | whether we should rotate around a point or follow a path
+	public const string errorCodeParamPath				 = "CameraSystem/ErrorCode";			// Int   | we set this when we error
+	public const string connectedPath					 = "CameraSystem/Connected";			// Bool  | we set this to true to show we are connected
+	public const string xPosSendParamPath				 = "CameraSystem/Receive/XPosition";	// Float | Current x location of the camera [0, 1]
+	public const string yPosSendParamPath				 = "CameraSystem/Receive/YPosition";	// Float | Current y location of the camera [0, 1]
+	public const string zPosSendParamPath				 = "CameraSystem/Receive/ZPosition";	// Float | Current z location of the camera [0, 1] 
+	public const string xRotSendParamPath				 = "CameraSystem/Receive/XRotation";	// Float | Current x euler rotation of the camera [0, 1]
+	public const string yRotSendParamPath				 = "CameraSystem/Receive/YRotation";	// Float | Current y euler rotation of the camera [0, 1]
+	public const string zRotSendParamPath				 = "CameraSystem/Receive/ZRotation";	// Float | Current z euler rotation of the camera [0, 1]
 
 
 	/*
@@ -243,33 +244,34 @@ public class CameraSystem
 				}
 				
 				if (!oscQueryNodes.TryGetValue(xRotReceiveParamPath, out var xRotReceiveParamNode)
-				    || !oscQueryNodes.TryGetValue(xRotReceiveBoolParamPath, out var xRotReceiveBoolParamNode)
-				    || !oscQueryNodes.TryGetValue(yRotReceiveParamPath, out var yRotReceiveParamNode)
-				    || !oscQueryNodes.TryGetValue(yRotReceiveBoolParamPath, out var yRotReceiveBoolParamNode)
-				    || !oscQueryNodes.TryGetValue(zRotReceiveParamPath, out var zRotReceiveParamNode)
-				    || !oscQueryNodes.TryGetValue(zRotReceiveBoolParamPath, out var zRotReceiveBoolParamNode)
-				    || !oscQueryNodes.TryGetValue(xPosReceiveParamPath, out var xPosReceiveParamNode)
-				    || !oscQueryNodes.TryGetValue(yPosReceiveParamPath, out var yPosReceiveParamNode)
-				    || !oscQueryNodes.TryGetValue(zPosReceiveParamPath, out var zPosReceiveParamNode)
-				    || !oscQueryNodes.TryGetValue(pointIndexParamPath, out var pointIndexParamNode)
-				    || !oscQueryNodes.TryGetValue(setPointParamPath, out var setPointParamNode)
-				    || !oscQueryNodes.TryGetValue(totalTimeParamPath, out var totalTimeParamNode)
-				    || !oscQueryNodes.TryGetValue(resetAllPointsParamPath, out var resetAllPointsParamNode)
-				    || !oscQueryNodes.TryGetValue(playTrackParamPath, out var playTrackParamNode)
-				    || !oscQueryNodes.TryGetValue(isPlayingParamPath, out var isPlayingParamNode)
-				    || !oscQueryNodes.TryGetValue(isTimePerPointParamPath, out var isTimePerPointParamNode)
-				    || !oscQueryNodes.TryGetValue(waitTimeParamPath, out var waitTimeParamNode)
-				    || !oscQueryNodes.TryGetValue(useBSplineParamPath, out var useBSplineParamNode)
-				    || !oscQueryNodes.TryGetValue(loopPath, out var loopParamNode)
-				    || !oscQueryNodes.TryGetValue(circleModePath, out var circleModeParamNode)
-				    || !oscQueryNodes.TryGetValue(errorCodeParamPath, out var errorCodeParamNode)
-				    || !oscQueryNodes.TryGetValue(connectedPath, out var connectedParamNode)
-				    || !oscQueryNodes.TryGetValue(xPosSendParamPath, out var xPosSendParamNode)
-				    || !oscQueryNodes.TryGetValue(yPosSendParamPath, out var yPosSendParamNode)
-				    || !oscQueryNodes.TryGetValue(zPosSendParamPath, out var zPosSendParamNode)
-				    || !oscQueryNodes.TryGetValue(xRotSendParamPath, out var xRotSendParamNode)
-				    || !oscQueryNodes.TryGetValue(yRotSendParamPath, out var yRotSendParamNode)
-				    || !oscQueryNodes.TryGetValue(zRotSendParamPath, out var zRotSendParamNode))
+					|| !oscQueryNodes.TryGetValue(xRotReceiveBoolParamPath, out var xRotReceiveBoolParamNode)
+					|| !oscQueryNodes.TryGetValue(yRotReceiveParamPath, out var yRotReceiveParamNode)
+					|| !oscQueryNodes.TryGetValue(yRotReceiveBoolParamPath, out var yRotReceiveBoolParamNode)
+					|| !oscQueryNodes.TryGetValue(zRotReceiveParamPath, out var zRotReceiveParamNode)
+					|| !oscQueryNodes.TryGetValue(zRotReceiveBoolParamPath, out var zRotReceiveBoolParamNode)
+					|| !oscQueryNodes.TryGetValue(xPosReceiveParamPath, out var xPosReceiveParamNode)
+					|| !oscQueryNodes.TryGetValue(yPosReceiveParamPath, out var yPosReceiveParamNode)
+					|| !oscQueryNodes.TryGetValue(zPosReceiveParamPath, out var zPosReceiveParamNode)
+					|| !oscQueryNodes.TryGetValue(pointIndexParamPath, out var pointIndexParamNode)
+					|| !oscQueryNodes.TryGetValue(setPointParamPath, out var setPointParamNode)
+					|| !oscQueryNodes.TryGetValue(totalTimeParamPath, out var totalTimeParamNode)
+					|| !oscQueryNodes.TryGetValue(resetAllPointsParamPath, out var resetAllPointsParamNode)
+					|| !oscQueryNodes.TryGetValue(playTrackParamPath, out var playTrackParamNode)
+					|| !oscQueryNodes.TryGetValue(isPlayingParamPath, out var isPlayingParamNode)
+					|| !oscQueryNodes.TryGetValue(isTimePerPointParamPath, out var isTimePerPointParamNode)
+					|| !oscQueryNodes.TryGetValue(waitTimeParamPath, out var waitTimeParamNode)
+					|| !oscQueryNodes.TryGetValue(useBSplineParamPath, out var useBSplineParamNode)
+					|| !oscQueryNodes.TryGetValue(loopPath, out var loopParamNode)
+					|| !oscQueryNodes.TryGetValue(closedLoopPath, out var closedLoopParamNode)
+					|| !oscQueryNodes.TryGetValue(circleModePath, out var circleModeParamNode)
+					|| !oscQueryNodes.TryGetValue(errorCodeParamPath, out var errorCodeParamNode)
+					|| !oscQueryNodes.TryGetValue(connectedPath, out var connectedParamNode)
+					|| !oscQueryNodes.TryGetValue(xPosSendParamPath, out var xPosSendParamNode)
+					|| !oscQueryNodes.TryGetValue(yPosSendParamPath, out var yPosSendParamNode)
+					|| !oscQueryNodes.TryGetValue(zPosSendParamPath, out var zPosSendParamNode)
+					|| !oscQueryNodes.TryGetValue(xRotSendParamPath, out var xRotSendParamNode)
+					|| !oscQueryNodes.TryGetValue(yRotSendParamPath, out var yRotSendParamNode)
+					|| !oscQueryNodes.TryGetValue(zRotSendParamPath, out var zRotSendParamNode))
 				{
 					continue;
 				}
@@ -369,7 +371,7 @@ public class CameraSystem
 						
 						Console.WriteLine($"Starting playing with {filteredPoints.Length} points for duration {length}");
 
-						Point[] finalPoints = GetFinalPointsList(filteredPoints);
+						Point[] finalPoints = GetFinalPointsList(filteredPoints, GetBool(closedLoopParamNode));
 						SplineType type = GetBool(useBSplineParamNode) ? SplineType.B : SplineType.CatmulRom;
 					
 						if (GetBool(circleModeParamNode))
@@ -424,23 +426,19 @@ public class CameraSystem
 		}
 	}
 	
-	public static Point[] GetFinalPointsList(Point[] inputPoints)
+	public static Point[] GetFinalPointsList(Point[] inputPoints, bool closedLoop)
 	{
-		Vector3 zeroToOnePos = (inputPoints[1].position - inputPoints[0].position);
-		Vector3 firstPos = inputPoints[0].position - zeroToOnePos;
+		Point[] points;
+		if (closedLoop)
+		{
+			points = new[] { inputPoints[^1] }.Concat(inputPoints).Append(inputPoints[0]).Append(inputPoints[1]).ToArray();
+		}
+		else
+		{
+			points = new[] { inputPoints[1] }.Concat(inputPoints).Append(inputPoints[^2]).ToArray();
+		}
 
-		Vector3 secondToLastPos = inputPoints[^2].position -
-		                       inputPoints[^1].position;
-		Vector3 lastPos = inputPoints[^1].position - secondToLastPos;
-		Vector3[] points = (new[] { firstPos }).Concat(inputPoints.Select(x => x.position)).Append(lastPos).ToArray();
-		
-		points = (new[] { inputPoints[1].position }).Concat(inputPoints.Select(x => x.position)).Append(inputPoints[^2].position).ToArray();
-
-		Quaternion[] rotations = (new[] { inputPoints[1].rotation }).Concat(inputPoints.Select(x => x.rotation)).Append(inputPoints[^2].rotation).ToArray();
-
-		Point[] newPoints = points.Zip(rotations).Select(tuple => new Point(tuple.First, tuple.Second)).ToArray();
-
-		return newPoints;
+		return points;
 	}
 
 
@@ -636,148 +634,148 @@ public class CameraSystem
 from scipy.interpolate import pchip_interpolate
 
 if __name__ == '__main__':
-    positions = list(map(lambda x: list(map(lambda y: float(y), x.split("$"))), sys.argv[1].split("|")))
-    eulers = list(map(lambda x: list(map(lambda y: float(y), x.split("$"))), sys.argv[2].split("|")))
-    amount = float(sys.argv[3])
-    # print(f"{len(positions), len(positions[0]), amount}")
-    x = range(-1, len(positions) - 1)
-    inputs = [1/amount * x for x in range(int((len(positions)-2) * amount))]
-    output_pos = pchip_interpolate(x, positions, inputs)
-    output_rot = pchip_interpolate(x, eulers, inputs)
-    pos_string = "|".join(map(lambda x: "$".join([str(i) for i in x]), output_pos))
-    rot_string = "|".join(map(lambda x: "$".join([str(i) for i in x]), output_rot))
-    print(pos_string + "^" + rot_string)
+	positions = list(map(lambda x: list(map(lambda y: float(y), x.split("$"))), sys.argv[1].split("|")))
+	eulers = list(map(lambda x: list(map(lambda y: float(y), x.split("$"))), sys.argv[2].split("|")))
+	amount = float(sys.argv[3])
+	# print(f"{len(positions), len(positions[0]), amount}")
+	x = range(-1, len(positions) - 1)
+	inputs = [1/amount * x for x in range(int((len(positions)-2) * amount))]
+	output_pos = pchip_interpolate(x, positions, inputs)
+	output_rot = pchip_interpolate(x, eulers, inputs)
+	pos_string = "|".join(map(lambda x: "$".join([str(i) for i in x]), output_pos))
+	rot_string = "|".join(map(lambda x: "$".join([str(i) for i in x]), output_rot))
+	print(pos_string + "^" + rot_string)
 	 */
 	
 	static List<Point> ResampleCurve(Point[] originalPoints, int desiredPointCount)
 	{
-	    List<Point> resampledPoints = new List<Point>();
+		List<Point> resampledPoints = new List<Point>();
 
-	    // Calculate the cumulative length of the curve.
-	    float[] cumulativeLengths = new float[originalPoints.Length];
-	    if (originalPoints.Length == 0)
-	    {
-		    return resampledPoints;
-	    }
-	    cumulativeLengths[0] = 0;
-	    float totalLength = 0;
+		// Calculate the cumulative length of the curve.
+		float[] cumulativeLengths = new float[originalPoints.Length];
+		if (originalPoints.Length == 0)
+		{
+			return resampledPoints;
+		}
+		cumulativeLengths[0] = 0;
+		float totalLength = 0;
 
-	    for (int i = 1; i < originalPoints.Length; i++)
-	    {
-	        float segmentLength = originalPoints[i - 1].GetDistance(originalPoints[i]);
-	        totalLength += segmentLength;
-	        cumulativeLengths[i] = totalLength;
-	    }
+		for (int i = 1; i < originalPoints.Length; i++)
+		{
+			float segmentLength = originalPoints[i - 1].GetDistance(originalPoints[i]);
+			totalLength += segmentLength;
+			cumulativeLengths[i] = totalLength;
+		}
 
-	    // Determine the spacing between points.
-	    float targetSpacing = totalLength / (desiredPointCount - 1);
+		// Determine the spacing between points.
+		float targetSpacing = totalLength / (desiredPointCount - 1);
 
-	    // Resample the curve with evenly spaced points.
-	    for (int i = 0; i < desiredPointCount; i++)
-	    {
-	        float targetLength = i * targetSpacing;
+		// Resample the curve with evenly spaced points.
+		for (int i = 0; i < desiredPointCount; i++)
+		{
+			float targetLength = i * targetSpacing;
 
-	        // Find the segment containing the target length.
-	        int segmentIndex = 0;
-	        while (segmentIndex < cumulativeLengths.Length - 1 && targetLength > cumulativeLengths[segmentIndex + 1])
-	        {
-	            segmentIndex++;
-	        }
+			// Find the segment containing the target length.
+			int segmentIndex = 0;
+			while (segmentIndex < cumulativeLengths.Length - 1 && targetLength > cumulativeLengths[segmentIndex + 1])
+			{
+				segmentIndex++;
+			}
 
-	        // Interpolate the point along the segment.
-	        float t = (targetLength - cumulativeLengths[segmentIndex]) /
-	                  (cumulativeLengths[segmentIndex + 1] - cumulativeLengths[segmentIndex]);
-	        Point interpolatedPoint = Interpolate(originalPoints[segmentIndex], originalPoints[segmentIndex + 1], t);
+			// Interpolate the point along the segment.
+			float t = (targetLength - cumulativeLengths[segmentIndex]) /
+					  (cumulativeLengths[segmentIndex + 1] - cumulativeLengths[segmentIndex]);
+			Point interpolatedPoint = Interpolate(originalPoints[segmentIndex], originalPoints[segmentIndex + 1], t);
 
-	        resampledPoints.Add(interpolatedPoint);
-	    }
+			resampledPoints.Add(interpolatedPoint);
+		}
 
-	    return resampledPoints;
+		return resampledPoints;
 	}
-	        
+			
 
 	static Point Interpolate(Point p1, Point p2, float t)
 	{
-	    Vector3 p = p1.position + (p2.position - p1.position) * t;
-	    Quaternion q = Quaternion.Slerp(p1.rotation, p2.rotation, t);
-	    return new Point(p, q);
+		Vector3 p = p1.position + (p2.position - p1.position) * t;
+		Quaternion q = Quaternion.Slerp(p1.rotation, p2.rotation, t);
+		return new Point(p, q);
 	}
 
 	public static Vector3 FromQ2(Quaternion q)
 	{
-	    Vector3 euler;
+		Vector3 euler;
 
-	    // if the input quaternion is normalized, this is exactly one. Otherwise, this acts as a correction factor for the quaternion's not-normalizedness
-	    float unit = (q.X * q.X) + (q.Y * q.Y) + (q.Z * q.Z) + (q.W * q.W);
+		// if the input quaternion is normalized, this is exactly one. Otherwise, this acts as a correction factor for the quaternion's not-normalizedness
+		float unit = (q.X * q.X) + (q.Y * q.Y) + (q.Z * q.Z) + (q.W * q.W);
 
-	    // this will have a magnitude of 0.5 or greater if and only if this is a singularity case
-	    float test = q.X * q.W - q.Y * q.Z;
+		// this will have a magnitude of 0.5 or greater if and only if this is a singularity case
+		float test = q.X * q.W - q.Y * q.Z;
 
-	    if (test > 0.4995f * unit) // singularity at north pole
-	    {
-	        euler.X = MathF.PI / 2;
-	        euler.Y = 2f * MathF.Atan2(q.Y, q.X);
-	        euler.Z = 0;
-	    }
-	    else if (test < -0.4995f * unit) // singularity at south pole
-	    {
-	        euler.X = -MathF.PI / 2;
-	        euler.Y = -2f * MathF.Atan2(q.Y, q.X);
-	        euler.Z = 0;
-	    }
-	    else // no singularity - this is the majority of cases
-	    {
-	        euler.X = MathF.Asin(2f * (q.W * q.X - q.Y * q.Z));
-	        euler.Y = MathF.Atan2(2f * q.W * q.Y + 2f * q.Z * q.X, 1 - 2f * (q.X * q.X + q.Y * q.Y));
-	        euler.Z = MathF.Atan2(2f * q.W * q.Z + 2f * q.X * q.Y, 1 - 2f * (q.Z * q.Z + q.X * q.X));
-	    }
+		if (test > 0.4995f * unit) // singularity at north pole
+		{
+			euler.X = MathF.PI / 2;
+			euler.Y = 2f * MathF.Atan2(q.Y, q.X);
+			euler.Z = 0;
+		}
+		else if (test < -0.4995f * unit) // singularity at south pole
+		{
+			euler.X = -MathF.PI / 2;
+			euler.Y = -2f * MathF.Atan2(q.Y, q.X);
+			euler.Z = 0;
+		}
+		else // no singularity - this is the majority of cases
+		{
+			euler.X = MathF.Asin(2f * (q.W * q.X - q.Y * q.Z));
+			euler.Y = MathF.Atan2(2f * q.W * q.Y + 2f * q.Z * q.X, 1 - 2f * (q.X * q.X + q.Y * q.Y));
+			euler.Z = MathF.Atan2(2f * q.W * q.Z + 2f * q.X * q.Y, 1 - 2f * (q.Z * q.Z + q.X * q.X));
+		}
 
-	    // all the math so far has been done in radians. Before returning, we convert to degrees...
-	    euler = euler / MathF.PI * 180f;
+		// all the math so far has been done in radians. Before returning, we convert to degrees...
+		euler = euler / MathF.PI * 180f;
 
-	    //...and then ensure the degree values are between 0 and 360
-	    euler.X %= 360;
-	    euler.Y %= 360;
-	    euler.Z %= 360;
+		//...and then ensure the degree values are between 0 and 360
+		euler.X %= 360;
+		euler.Y %= 360;
+		euler.Z %= 360;
 
-	    if (euler.X < 0)
-	    {
-		    euler.X += 360;
-	    }
+		if (euler.X < 0)
+		{
+			euler.X += 360;
+		}
 
-	    if (euler.Y < 0)
-	    {
-		    euler.Y += 360;
-	    }
-	    
-	    if (euler.Z < 0)
-	    {
-		    euler.Z += 360;
-	    }
-	    
-	    return euler;
+		if (euler.Y < 0)
+		{
+			euler.Y += 360;
+		}
+		
+		if (euler.Z < 0)
+		{
+			euler.Z += 360;
+		}
+		
+		return euler;
 	}
 
 	public static Quaternion ToQ(Vector3 euler)
 	{
-	    float xOver2 = euler.X * MathF.PI / 180f * 0.5f;
-	    float yOver2 = euler.Y * MathF.PI / 180f * 0.5f;
-	    float zOver2 = euler.Z * MathF.PI / 180f * 0.5f;
+		float xOver2 = euler.X * MathF.PI / 180f * 0.5f;
+		float yOver2 = euler.Y * MathF.PI / 180f * 0.5f;
+		float zOver2 = euler.Z * MathF.PI / 180f * 0.5f;
 
-	    float sinXOver2 = MathF.Sin(xOver2);
-	    float cosXOver2 = MathF.Cos(xOver2);
-	    float sinYOver2 = MathF.Sin(yOver2);
-	    float cosYOver2 = MathF.Cos(yOver2);
-	    float sinZOver2 = MathF.Sin(zOver2);
-	    float cosZOver2 = MathF.Cos(zOver2);
+		float sinXOver2 = MathF.Sin(xOver2);
+		float cosXOver2 = MathF.Cos(xOver2);
+		float sinYOver2 = MathF.Sin(yOver2);
+		float cosYOver2 = MathF.Cos(yOver2);
+		float sinZOver2 = MathF.Sin(zOver2);
+		float cosZOver2 = MathF.Cos(zOver2);
 
-	    Quaternion result;
-	    result.X = cosYOver2 * sinXOver2 * cosZOver2 + sinYOver2 * cosXOver2 * sinZOver2;
-	    result.Y = sinYOver2 * cosXOver2 * cosZOver2 - cosYOver2 * sinXOver2 * sinZOver2;
-	    result.Z = cosYOver2 * cosXOver2 * sinZOver2 - sinYOver2 * sinXOver2 * cosZOver2;
-	    result.W = cosYOver2 * cosXOver2 * cosZOver2 + sinYOver2 * sinXOver2 * sinZOver2;
+		Quaternion result;
+		result.X = cosYOver2 * sinXOver2 * cosZOver2 + sinYOver2 * cosXOver2 * sinZOver2;
+		result.Y = sinYOver2 * cosXOver2 * cosZOver2 - cosYOver2 * sinXOver2 * sinZOver2;
+		result.Z = cosYOver2 * cosXOver2 * sinZOver2 - sinYOver2 * sinXOver2 * cosZOver2;
+		result.W = cosYOver2 * cosXOver2 * cosZOver2 + sinYOver2 * sinXOver2 * sinZOver2;
 
-	    return result;
+		return result;
 	}
 
 	public static string testShouldStay = "a";
