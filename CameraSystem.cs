@@ -81,6 +81,11 @@ public class CameraSystem
 		
 		new Thread(RunOSCQuery).Start();
 		
+		Application.ApplicationExit += (sender, args) =>
+		{
+			notifyIcon.Visible = false;
+		};
+		
 		Application.Run();
 	}
 
