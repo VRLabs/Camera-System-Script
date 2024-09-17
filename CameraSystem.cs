@@ -293,7 +293,6 @@ public class CameraSystem
 				if (frameIndex == 0)
 				{
 					socket.Send(new OscMessage(resetAllPointsParamNode.FullPath, new object[] { true }).ToByteArray());
-					socket.Send(new OscMessage(totalTimeParamNode.FullPath, new object[] { 0.0f }).ToByteArray());
 				}
 				
 				if (frameIndex == 5)
